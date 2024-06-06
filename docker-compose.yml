@@ -1,0 +1,63 @@
+
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - PYTHON_ENV=development
+
+  database:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  ai:
+    build: ./ai
+    ports:
+      - "6000:6000"
+    volumes:
+      - ./ai:/app
+    environment:
+      - AI_ENV=development
+
+  security:
+    build: ./security
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./security:/app
+    environment:
+      - SECURITY_ENV=development
+
+  mobile:
+    build: ./mobile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mobile:/app
+    environment:
+      - MOBILE_ENV=development
+
+volumes:
+  db_data:
+
